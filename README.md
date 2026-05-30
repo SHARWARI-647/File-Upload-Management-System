@@ -119,6 +119,11 @@ Alternatively, use the included `render.yaml` Blueprint for one-click deploy.
 - Bootstrap 5, Bootstrap Icons
 - Vanilla JavaScript (XHR upload, theme toggle)
 
-## License
+## Output
 
-MIT
+<img src="Screenshot 2026-05-30 234602.png">
+<img src="Screenshot 2026-05-30 234623.png">
+<img src="Screenshot 2026-05-30 234734.png">
+<img src="Screenshot 2026-05-30 234748.png">
+<img src="Screenshot 2026-05-30 234759.png">
+<img src="Screenshot 2026-05-30 234820.png">
