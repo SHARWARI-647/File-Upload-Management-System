@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body_class %}app-layout{% endblock %}
+{% block body %}
+<div class="app-wrapper">
+    {% include "partials/sidebar.html" %}
+    <div class="main-content">
+        {% include "partials/topbar.html" %}
+        <main class="content-area">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+<div class="sidebar-overlay d-lg-none" id="sidebarOverlay"></div>
+{% endblock %}

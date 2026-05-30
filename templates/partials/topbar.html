@@ -1,0 +1,23 @@
+<header class="topbar">
+    <button class="btn btn-link sidebar-toggle d-lg-none" id="sidebarToggle" type="button">
+        <i class="bi bi-list"></i>
+    </button>
+    <div class="topbar-title">
+        {% block page_title %}Dashboard{% endblock %}
+    </div>
+    <div class="topbar-actions">
+        <button class="btn btn-outline-secondary btn-sm" id="themeToggle" type="button" title="Toggle theme">
+            <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+        </button>
+        <div class="dropdown">
+            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i> {{ current_user.username }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="{{ url_for('profile.index') }}">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>

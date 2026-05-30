@@ -1,0 +1,101 @@
+{% extends "layout_app.html" %}
+{% block title %}Dashboard - File Manager{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card stat-primary">
+            <div class="stat-icon"><i class="bi bi-files"></i></div>
+            <div class="stat-info">
+                <h3>{{ stats.total_files }}</h3>
+                <p>Total Files</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card stat-success">
+            <div class="stat-icon"><i class="bi bi-hdd"></i></div>
+            <div class="stat-info">
+                <h3>{{ stats.total_size }}</h3>
+                <p>Storage Used</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card stat-warning">
+            <div class="stat-icon"><i class="bi bi-download"></i></div>
+            <div class="stat-info">
+                <h3>{{ stats.total_downloads }}</h3>
+                <p>Total Downloads</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-clock"></i> Recent Uploads</h5>
+                <a href="{{ url_for('files.list_files') }}" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_files %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for f in recent_files %}
+                            <tr>
+                                <td><i class="bi bi-file-earmark"></i> {{ f.original_filename }}</td>
+                                <td><span class="badge bg-secondary">{{ f.file_type|upper }}</span></td>
+                                <td>{{ f.upload_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-4 mb-0">No files uploaded yet. <a href="{{ url_for('files.list_files') }}">Upload your first file</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-activity"></i> Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_activity %}
+                <ul class="activity-list">
+                    {% for log in recent_activity %}
+                    <li>
+                        <span class="activity-badge">{{ log.action }}</span>
+                        <span class="activity-text">{{ log.details or log.action }}</span>
+                        <small class="text-muted">{{ log.created_at.strftime('%m/%d %H:%M') }}</small>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted mb-0">No activity yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card shadow-sm mt-4">
+            <div class="card-body text-center">
+                <i class="bi bi-cloud-upload display-4 text-primary"></i>
+                <h5 class="mt-2">Quick Upload</h5>
+                <p class="text-muted">Drag and drop files on the Files page</p>
+                <a href="{{ url_for('files.list_files') }}" class="btn btn-primary">Go to Files</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <i class="bi bi-cloud-arrow-up-fill"></i>
+        <span>FileVault</span>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="{{ url_for('dashboard.index') }}" class="nav-link {% if request.endpoint == 'dashboard.index' %}active{% endif %}">
+            <i class="bi bi-grid-fill"></i> Dashboard
+        </a>
+        <a href="{{ url_for('files.list_files') }}" class="nav-link {% if request.endpoint and 'files' in request.endpoint %}active{% endif %}">
+            <i class="bi bi-folder-fill"></i> My Files
+        </a>
+        <a href="{{ url_for('files.history') }}" class="nav-link {% if request.endpoint == 'files.history' %}active{% endif %}">
+            <i class="bi bi-clock-history"></i> History
+        </a>
+        <a href="{{ url_for('profile.index') }}" class="nav-link {% if request.endpoint and 'profile' in request.endpoint %}active{% endif %}">
+            <i class="bi bi-person-fill"></i> Profile
+        </a>
+        {% if current_user.is_admin %}
+        <a href="{{ url_for('admin.index') }}" class="nav-link {% if request.endpoint and 'admin' in request.endpoint %}active{% endif %}">
+            <i class="bi bi-shield-lock-fill"></i> Admin
+        </a>
+        {% endif %}
+    </nav>
+    <div class="sidebar-footer">
+        <a href="{{ url_for('auth.logout') }}" class="nav-link text-danger">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
+</aside>

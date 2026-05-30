@@ -1,0 +1,138 @@
+{% extends "layout_app.html" %}
+{% block title %}Admin - File Manager{% endblock %}
+{% block page_title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card stat-primary">
+            <div class="stat-icon"><i class="bi bi-people"></i></div>
+            <div class="stat-info"><h3>{{ stats.total_users }}</h3><p>Users</p></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card stat-success">
+            <div class="stat-icon"><i class="bi bi-files"></i></div>
+            <div class="stat-info"><h3>{{ stats.total_files }}</h3><p>Files</p></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card stat-warning">
+            <div class="stat-icon"><i class="bi bi-hdd"></i></div>
+            <div class="stat-info"><h3>{{ stats.total_size }}</h3><p>Storage</p></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card stat-danger">
+            <div class="stat-icon"><i class="bi bi-download"></i></div>
+            <div class="stat-info"><h3>{{ stats.total_downloads }}</h3><p>Downloads</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header"><h5 class="mb-0"><i class="bi bi-people"></i> All Users</h5></div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in users %}
+                            <tr>
+                                <td>{{ u.username }}</td>
+                                <td>{{ u.email }}</td>
+                                <td>
+                                    {% if u.is_admin %}<span class="badge bg-danger">Admin</span>
+                                    {% else %}<span class="badge bg-secondary">User</span>{% endif %}
+                                </td>
+                                <td>
+                                    {% if u.id != current_user.id %}
+                                    <form method="POST" action="{{ url_for('admin.toggle_admin', user_id=u.id) }}" class="d-inline">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-warning" title="Toggle admin">
+                                            <i class="bi bi-shield"></i>
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('admin.delete_user', user_id=u.id) }}" class="d-inline" onsubmit="return confirm('Delete user and all their files?');">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-header"><h5 class="mb-0"><i class="bi bi-folder"></i> All Uploaded Files</h5></div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Owner</th>
+                                <th>Size</th>
+                                <th>Downloads</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for f in all_files %}
+                            <tr>
+                                <td>{{ f.original_filename }}</td>
+                                <td>{{ f.owner.username }}</td>
+                                <td>{{ format_file_size(f.file_size) }}</td>
+                                <td>{{ f.download_count }}</td>
+                                <td>
+                                    <form method="POST" action="{{ url_for('admin.delete_file', file_id=f.id) }}" class="d-inline" onsubmit="return confirm('Delete this file?');">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header"><h5 class="mb-0"><i class="bi bi-journal-text"></i> Activity Logs</h5></div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-sm mb-0">
+                <thead>
+                    <tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    {% for log in recent_logs %}
+                    <tr>
+                        <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ log.user.username if log.user else '—' }}</td>
+                        <td><span class="badge bg-secondary">{{ log.action }}</span></td>
+                        <td>{{ log.details }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}413 File Too Large{% endblock %}
+{% block body %}
+<div class="error-page">
+    <h1>413</h1>
+    <p>File exceeds the maximum size of 20 MB.</p>
+    <a href="{{ url_for('files.list_files') }}" class="btn btn-primary">Back to Files</a>
+</div>
+{% endblock %}
