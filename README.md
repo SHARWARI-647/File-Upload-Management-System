@@ -121,9 +121,9 @@ Alternatively, use the included `render.yaml` Blueprint for one-click deploy.
 
 ## Output
 
-<img src="Screenshot 2026-05-30 234602.png">
-<img src="Screenshot 2026-05-30 234623.png">
-<img src="Screenshot 2026-05-30 234734.png">
-<img src="Screenshot 2026-05-30 234748.png">
-<img src="Screenshot 2026-05-30 234759.png">
-<img src="Screenshot 2026-05-30 234820.png">
+<img src="images/Screenshot 2026-05-30 234602.png">
+<img src="images/Screenshot 2026-05-30 234623.png">
+<img src="images/Screenshot 2026-05-30 234734.png">
+<img src="images/Screenshot 2026-05-30 234748.png">
+<img src="images/Screenshot 2026-05-30 234759.png">
+<img src="images/Screenshot 2026-05-30 234820.png">
